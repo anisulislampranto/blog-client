@@ -14,6 +14,7 @@ import {
 import Link from "next/link"
 import { AdminRoutes } from "@/routes/adminRoutes"
 import { UserRoutes } from "@/routes/userRoutes"
+import { Route } from "@/types"
 
 export function AppSidebar({
   user,
@@ -21,7 +22,7 @@ export function AppSidebar({
   }: {
     user: { role: string } & React.ComponentProps<typeof Sidebar>
   }) {
-    let routes = [];
+    let routes: Route[] = [];
 
     switch (user.role) {
       case 'admin':
