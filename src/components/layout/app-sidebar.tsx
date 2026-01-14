@@ -12,6 +12,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import { AdminRoutes } from "@/routes/adminRoutes"
+import { UserRoutes } from "@/routes/userRoutes"
 
 // This is sample data.
 const data = {
@@ -34,12 +36,31 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  user,
+  ...props
+  }: {
+    user: { role: string } & React.ComponentProps<typeof Sidebar>
+  }) {
+    let routes = [];
+
+    switch (user.role) {
+      case 'admin':
+        routes = AdminRoutes;
+        break;
+      case 'user':
+        routes = UserRoutes;
+        break;
+      default:
+        routes = []
+        break;
+    }
+
   return (
     <Sidebar {...props}>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
+        {routes.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
