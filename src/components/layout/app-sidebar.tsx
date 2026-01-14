@@ -15,27 +15,6 @@ import Link from "next/link"
 import { AdminRoutes } from "@/routes/adminRoutes"
 import { UserRoutes } from "@/routes/userRoutes"
 
-// This is sample data.
-const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: [
-    {
-      title: "Getting Started",
-      url: "#",
-      items: [
-        {
-          title: "User Dashboard",
-          url: "/dashboard",
-        },
-        {
-          title: "Admin Dashboard",
-          url: "/admin-dashboard",
-        },
-      ],
-    },
-  ],
-}
-
 export function AppSidebar({
   user,
   ...props
