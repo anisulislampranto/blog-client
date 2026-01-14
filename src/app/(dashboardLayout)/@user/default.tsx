@@ -1,5 +1,3 @@
 export default function UserDefault() {
-    return (
-        <div>UserDefaultPage</div>
-    )
+    return null;
 }
