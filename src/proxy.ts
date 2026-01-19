@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server"
 import { userService } from "./services/user.service";
 import { roles } from "./constants/roles";
 
-export const proxy = async(request: NextRequest) => {
+export const proxy = async (request: NextRequest) => {
+    const pathname = request.nextUrl.pathname;
     let isAuthenticated = false;
     let isAdmin = false;
 
-    const {data} = await userService.getSession();
+    const { data } = await userService.getSession();
+
+    console.log('data', data);
 
     if (data) {
         isAuthenticated = true;
@@ -17,9 +20,17 @@ export const proxy = async(request: NextRequest) => {
         return NextResponse.redirect(new URL("/login", request.url))
     }
 
+    if (isAdmin && pathname.startsWith('/dashboard')) {
+        return NextResponse.redirect(new URL("/admin-dashboard", request.url))
+    }
+
+    if (!isAdmin && pathname.startsWith('/admin-dashboard')) {
+        return NextResponse.redirect(new URL("/dashboard", request.url))
+    }
+
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/dashboard"]
+    matcher: ["/dashboard", "/admin-dashboard"]
 }
