@@ -7,7 +7,6 @@ interface GetBlogsParams {
     search?: string;
 }
 
-
 interface ServiceOptions {
     cache?: RequestCache;
     revalidate?: number;
@@ -54,7 +53,26 @@ const getBlogPosts = async (
     }
 }
 
+const getBlogPostById = async (
+    id: string,
+) => {
+    try {
+        const url = new URL(`${API_URL}/posts/${id}`);
+        const res = await fetch(url.toString());
+        const data = await res.json();
+        return { data, error: null };
+    } catch (error) {
+        return {
+            data: null,
+            error: {
+                message: 'Something went wrong'
+            }
+        }
+    }
+}
+
 
 export const blogService = {
-    getBlogPosts
+    getBlogPosts,
+    getBlogPostById
 }
