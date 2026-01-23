@@ -11,7 +11,9 @@ import {
 import {
   Field,
   FieldGroup,
+  FieldLabel,
 } from "@/components/ui/field"
+import { Input } from "@/components/ui/input";
 import { useForm } from '@tanstack/react-form'
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
@@ -45,14 +47,21 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           <FieldGroup>
             <form.Field
               name="name"
-              children={() =>
-                <Field>
-
-                </Field>
-              }
+              children={(field) => {
+                return (
+                  <Field>
+                    <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+                    <Input
+                      type="text"
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                  </Field>
+                )
+              }}
             />
-
-
           </FieldGroup>
 
         </form>
