@@ -15,6 +15,7 @@ import Link from "next/link"
 import { AdminRoutes } from "@/routes/adminRoutes"
 import { UserRoutes } from "@/routes/userRoutes"
 import { Route } from "@/types"
+import { Roles } from "@/constants/roles"
 
 export function AppSidebar({
   user,
@@ -25,10 +26,10 @@ export function AppSidebar({
     let routes: Route[] = [];
 
     switch (user.role) {
-      case 'admin':
+      case Roles.admin:
         routes = AdminRoutes;
         break;
-      case 'user':
+      case Roles.user:
         routes = UserRoutes;
         break;
       default:

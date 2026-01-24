@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { userService } from "./services/user.service";
-import { roles } from "./constants/roles";
+import { Roles } from "./constants/roles";
 
 export const proxy = async (request: NextRequest) => {
     const pathname = request.nextUrl.pathname;
@@ -9,11 +9,9 @@ export const proxy = async (request: NextRequest) => {
 
     const { data } = await userService.getSession();
 
-    console.log('data', data);
-
     if (data) {
         isAuthenticated = true;
-        isAdmin = data?.user?.role === roles.admin
+        isAdmin = data?.user?.role === Roles.admin
     }
 
     if (!isAuthenticated) {
