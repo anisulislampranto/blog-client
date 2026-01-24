@@ -1,4 +1,5 @@
 import { env } from "@/env"
+import { cookies } from "next/headers";
 
 const API_URL = env.API_URL;
 
@@ -10,6 +11,12 @@ interface GetBlogsParams {
 interface ServiceOptions {
     cache?: RequestCache;
     revalidate?: number;
+}
+
+export interface BlogData {
+    title: string;
+    content: string;
+    tags?: string[]
 }
 
 const getBlogPosts = async (
@@ -75,8 +82,41 @@ const getBlogPostById = async (
     }
 }
 
+const createBlogPost = async (blogData: BlogData) => {
+    try {
+        const cookieStore = await cookies();
+
+        const res = await fetch(`${API_URL}/posts`, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                Cookie: cookieStore.toString()
+            },
+            body: JSON.stringify(blogData)
+        })
+
+        const data = await res.json()
+
+        if (data.error) {
+            return { data: null, error: { message: 'Post not created!' } }
+        }
+
+
+        return { data, error: null }
+
+    } catch (error) {
+        return {
+            data: null,
+            error: {
+                message: 'Something went wrong'
+            }
+        }
+    }
+}
+
 
 export const blogService = {
     getBlogPosts,
-    getBlogPostById
+    getBlogPostById,
+    createBlogPost
 }
