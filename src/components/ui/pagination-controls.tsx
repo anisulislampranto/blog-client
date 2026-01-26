@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Pagination,
     PaginationContent,
@@ -7,6 +9,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationControlsProps {
     meta: {
@@ -18,30 +21,28 @@ interface PaginationControlsProps {
 }
 
 export function PaginationControls({ meta }: PaginationControlsProps) {
-    const {limit, page, total, totalPages} = meta;
+    const { limit, page, total, totalPages } = meta;
+    const searParams = useSearchParams()
+    const router = useRouter()
+
+    const navigateToPage = (page: number) => {
+        const params = new URLSearchParams(searParams.toString())
+        params.set("page", page.toString())
+        router.push(`?${params.toString()}`)
+        console.log('params', params);
+    }
 
     return (
         <Pagination>
             <PaginationContent>
                 <PaginationItem>
-                    <PaginationPrevious href="#" />
+                    <PaginationPrevious className="cursor-pointer" onClick={() => navigateToPage(page - 1)} />
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationLink href="#">1</PaginationLink>
+                    <PaginationLink isActive>{page}</PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationLink href="#" isActive>
-                        2
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationNext href="#" />
+                    <PaginationNext className="cursor-pointer" onClick={() => navigateToPage(page + 1)} />
                 </PaginationItem>
             </PaginationContent>
         </Pagination>
