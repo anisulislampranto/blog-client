@@ -1,3 +1,4 @@
+import HistoryTable from "@/components/modules/user/history/HistoryTable";
 import { blogService } from "@/services/blog.service";
 import { BlogPost } from "@/types";
 
@@ -7,9 +8,7 @@ export default async function HistoryPage() {
 
     return (
         <div>
-            {
-                posts?.map((el: BlogPost) => <p key={el.id}>{el.title}</p>)
-            }
+            <HistoryTable posts={posts} />
         </div>
     )
 }
