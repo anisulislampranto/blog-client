@@ -1,5 +1,5 @@
 import HistoryTable from "@/components/modules/user/history/HistoryTable";
-import { PaginationControls } from "@/components/ui/pagination-controls";
+import PaginationControls from "@/components/ui/pagination-controls";
 import { blogService } from "@/services/blog.service";
 
 export default async function HistoryPage({ searchParams }: { searchParams: Promise<{ page: string }> }) {
