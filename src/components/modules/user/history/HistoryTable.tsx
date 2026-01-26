@@ -5,22 +5,21 @@ export default function HistoryTable({ posts }: { posts: BlogPost[] }) {
     return (
         <div className="border rounded-md">
             <Table>
-                <TableCaption>A list of your recent invoices.</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Invoice</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Method</TableHead>
-                        <TableHead>Amount</TableHead>
+                        <TableHead>Title</TableHead>
+                        <TableHead>Tags</TableHead>
+                        <TableHead>Views</TableHead>
+                        <TableHead>Content</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {posts?.map((el) => (
-                        <TableRow>
+                        <TableRow key={el.id}>
                             <TableCell>{el.title}</TableCell>
-                            <TableCell>{el.title}</TableCell>
-                            <TableCell>{el.title}</TableCell>
-                            <TableCell>{el.title}</TableCell>
+                            <TableCell>{el.tags}</TableCell>
+                            <TableCell>{el.views}</TableCell>
+                            <TableCell>{el.content}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
